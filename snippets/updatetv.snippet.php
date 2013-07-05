@@ -9,5 +9,5 @@
  * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  * @author		Jako to version 1.5.2 and now the ClipperCMS community
  */
-return include(MODX_BASE_PATH.'assets/tvs/multitv/multitv.snippet.php');
+return include(MODX_BASE_PATH.'assets/tvs/multitv/updatetv.snippet.php');
 

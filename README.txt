@@ -1,6 +1,8 @@
 multiTV custom template variable
 ================================================================================
 
+For ClipperCMS, based on MultiTV for MODx.
+
 Transform template variables into a sortable multi item list for the MODX Evolution content management framework
 
 Events example:

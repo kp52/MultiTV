@@ -1,5 +1,5 @@
 <?php
-if (!defined('MODX_BASE_PATH')) {
+if (MODX_BASE_PATH == '') {
 	die('<h1>ERROR:</h1><p>Please use do not access this file directly.</p>');
 }
 
@@ -40,6 +40,7 @@ $offset = isset($offset) ? intval($offset) : 0;
 $rows = (isset($rows) && ($rows != 'all')) ? explode(',', $rows) : 'all';
 $toPlaceholder = (isset($toPlaceholder) && $toPlaceholder != '') ? $toPlaceholder : FALSE;
 $randomize = (isset($randomize) && $randomize) ? TRUE : FALSE;
+$reverse = (isset($reverse) && $reverse) ? TRUE : FALSE;
 $orderBy = isset($orderBy) ? $orderBy : '';
 list($sortBy, $sortDir) = explode(" ", $orderBy);
 $published = (isset($published)) ? $published : '1';
@@ -67,7 +68,7 @@ switch (strtolower($published)) {
 }
 $tvOutput = $tvOutput[$tvName];
 $tvOutput = json_decode($tvOutput, TRUE);
-if ($tvOutput['fieldValue']) {
+if (isset($tvOutput['fieldValue'])) {
 	$tvOutput = $tvOutput['fieldValue'];
 }
 $countOutput = count($tvOutput);
@@ -102,6 +103,8 @@ if (!$countOutput || $firstEmpty) {
 // random or sort output
 if ($randomize) {
 	shuffle($tvOutput);
+} elseif ($reverse) {
+	$tvOutput = array_reverse($tvOutput);
 } elseif (!empty($sortBy)) {
 	$multiTV->sort($tvOutput, trim($sortBy), trim($sortDir));
 }

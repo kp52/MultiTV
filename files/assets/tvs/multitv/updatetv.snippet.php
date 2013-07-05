@@ -1,5 +1,5 @@
 <?php
-if (!defined('MODX_BASE_PATH')) {
+if (MODX_BASE_PATH == '') {
 	die('<h1>ERROR:</h1><p>Please use do not access this file directly.</p>');
 }
 

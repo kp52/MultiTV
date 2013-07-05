@@ -1,3 +1,5 @@
+var $ = jQuery.noConflict();
+
 var lastImageCtrl;
 var lastFileCtrl;
 var rteOptions;
@@ -279,7 +281,7 @@ function SetUrl(url, width, height, alt) {
 			if (!field.hasClass('transformed')) {
 				// reset all event
 				fieldClear.find('a').click(function() {
-					var answer = confirm(tvlanguage.confirmclear);
+					var answer = confirm(settings.language.confirmclear);
 					if (answer) {
 						fieldList.children('li').remove();
 						field.val('[]');
@@ -590,8 +592,8 @@ function SetUrl(url, width, height, alt) {
 					data.settings.autoincrement = 1;
 				}
 				$.each(data.value, function(key, value) {
-					this.DT_RowId = tvid + key + 1;
-					this.MTV_RowId = key + 1;
+					this.DT_RowId = tvid + (key + 1);
+					this.MTV_RowId = (key + 1);
 				});
 			}
 
@@ -641,7 +643,7 @@ function SetUrl(url, width, height, alt) {
 						if (fieldInput.hasClass('image')) {
 							setThumbnail(value, fieldInput.attr('name'), fieldEditArea);
 						}
-						$('#' + tvid + key + '_mtv').setValue(value);
+						fieldInput.setValue(value);
 					});
 				} else {
 					fieldEditForm.find('.formtabradio:first').addClass('active').find('input[type="radio"]').attr('checked', 'checked');
@@ -704,9 +706,11 @@ function SetUrl(url, width, height, alt) {
 				var saveTab = fieldEditForm.find('[name^="' + tvid + 'tab_radio_mtv"]').getValue();
 				values.fieldTab = (saveTab !== '') ? saveTab : '';
 				fieldEditArea.find(':input').each(function(i) {
-					var key = $(this).attr('name').replace(/tv.\d(.*)_mtv/, '$1');
-					if (key !== '') {
-						values[key] = $(this).val();
+					if ($(this).attr('name')) {
+						var key = $(this).attr('name').replace(/tv\d+(.*)_mtv/, '$1');
+						if (key !== '') {
+							values[key] = $(this).val();
+						}
 					}
 				});
 				$.ajax({
@@ -730,7 +734,7 @@ function SetUrl(url, width, height, alt) {
 							fieldTable.fnUpdate(values, selected);
 						} else {
 							values.MTV_RowId = fieldTable.fnGetData().length + 1;
-							values.DT_RowId = fieldTable.fnGetData().length + 1;
+							values.DT_RowId = tvid + (fieldTable.fnGetData().length + 1);
 							fieldTable.fnAddData(values);
 						}
 						clearInputs(fieldEditArea);
